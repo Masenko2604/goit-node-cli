@@ -1,43 +1,41 @@
-import * as contactsService from "./contacts.js";
 import { program } from "commander";
+import {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact
+} from "./contacts.js";
 
 program
-  .option("-a, --action <type>", "choose action")
-  .option("-i, --id <type>", "user id")
-  .option("-n, --name <type>", "user name")
-  .option("-e, --email <type>", "user email")
-  .option("-p, --phone <type>", "user phone");
-
-program.parse(process.argv);
-
+    .option("-a, --action <type>", "choose action")
+    .option("-i, --id <type>", "user id")
+    .option("-n, --name <type>", "user name")
+    .option("-e, --email <type>", "user email")
+    .option("-p, --phone <type>", "user phone");
+program.parse();
 const options = program.opts();
 
-// TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
-  switch (action) {
-    case "list":
-      const listContacts = await contactsService.listContacts();
-      console.table(listContacts);
-      break;
+    switch (action) {
+        case "list":
+            console.table(await listContacts());
+            break;
 
-    case "get":
-      const getContact = await contactsService.getContactById(id);
-      console.table(getContact);
-      break;
+        case "get":
+            console.table(await getContactById(id));
+            break;
 
-    case "add":
-      const addUsers = await contactsService.addContact(name, email, phone);
-      console.table(addUsers);
-      break;
+        case "add":
+            console.table(await addContact(name, email, phone));
+            break;
 
-    case "remove":
-      const removed = await contactsService.removeContact(id);
-      console.table(removed);
-      break;
+        case "remove":
+            console.table(await removeContact(id));
+            break;
 
-    default:
-      console.warn("\x1B[31m Unknown action type!");
-  }
+        default:
+            console.warn("\x1B[31m Unknown action type!");
+    }
 }
 
 invokeAction(options);
