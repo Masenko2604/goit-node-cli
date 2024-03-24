@@ -23,7 +23,7 @@ export async function getContactById(contactId) {
     const result = contact ? contact : null;
     return result;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 }
 
@@ -36,7 +36,7 @@ export async function removeContact(contactId) {
 
     return deletedContact;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 }
 
@@ -50,6 +50,6 @@ export async function addContact(name, email, phone) {
 
     return newUserObj;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 }
