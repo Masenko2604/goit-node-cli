@@ -1,4 +1,5 @@
 import { program } from "commander";
+import "colors";
 import {
   listContacts,
   getContactById,
